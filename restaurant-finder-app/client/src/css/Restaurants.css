@@ -1,0 +1,24 @@
+.pagination-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.cardContainer{
+    /* height: 90%; */
+    width: 100%;
+}
+
+.restCard{
+    margin-top: 10px;
+    width: 95%;
+
+    /* margin-left: 5px;
+    margin-right: 5px; */
+}
+
+.cardImg{
+    height: 100px;
+    width: 100px;
+}
