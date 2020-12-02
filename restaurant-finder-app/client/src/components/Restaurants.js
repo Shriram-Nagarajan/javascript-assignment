@@ -12,14 +12,19 @@ class Restaurants extends CoreView {
   constructor(props){
       super(props);
       this.restaurants = null;
+      this.handlePageChange = this.handlePageChange.bind(this);
       this.state = {
-        restLoaded : false
+        restLoaded : false,
+        pageNo: 1
       }
   }
 
-  getRestaurants(restaurants){
+  renderRestaurants(restaurants){
     if(restaurants && restaurants.length > 0){
-      return restaurants.map((each, idx) => {
+      let pageNo = this.state.pageNo;
+      return restaurants.filter((each, idx) => {
+        return (idx >= ((pageNo-1) * (window.restaurantsPerPage)) && idx < ((pageNo) * (window.restaurantsPerPage)))
+      }).map((each, idx) => {
 
         let rest = {};
 
@@ -59,20 +64,30 @@ class Restaurants extends CoreView {
     return window.location.pathname.split("/restaurants/")[1];
   }
 
+  handlePageChange(event, value){
+    let me = this;
+    if(value > 0){
+      me.setState({
+        pageNo : value
+      });
+    }
+  }
+
   render(){
     let {classes} = this.props;
     console.log("classes" , classes);
-    if(this.state.restLoaded){
+    if(this.state.restLoaded && this.restaurants && this.restaurants.length > 0){
+      let totalPages = this.restaurants.length / window.restaurantsPerPage;
       return (
         <div className={" d-flex flex-column align-items-start"}>
           {/* <Pagination count={10} variant="outlined" /> */}
           <div className="d-flex flex-column cardContainer align-items-center">
             {/* <RestaurantCard  />
             <RestaurantCard /> */}
-            {this.getRestaurants(this.restaurants)}
+            {this.renderRestaurants(this.restaurants)}
           </div>
           <div className="pagination-container">
-             <Pagination count={10} variant="outlined" color="primary" />
+             <Pagination count={totalPages} variant="outlined" color="primary" onChange={this.handlePageChange} />
           </div>
           {/* <Pagination count={10} variant="outlined" color="secondary" /> */}
           {/* <Pagination count={10} variant="outlined" disabled /> */}

@@ -39,7 +39,7 @@ export default class Cuisines extends CoreView{
     render(){
         let me = this;
         return (
-            <div className="d-flex flex-row align-items-start">
+            <div className="d-flex flex-row align-items-start flex-wrap">
                 {(() => me.getCuisines())()}
             </div>
         )
