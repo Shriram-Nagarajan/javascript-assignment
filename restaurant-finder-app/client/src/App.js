@@ -18,8 +18,8 @@ export default class App extends React.Component {
       <Router>
       <Switch>
         <Route path ="/cities" exact component={Cities} />
-        <Route path="/restaurants" exact component={Restaurants} />
-        <Route path="/restdetails" exact component={RestaurantDetails} />
+        <Route path="/restaurants/:cityId" exact component={Restaurants} />
+        <Route path="/restdetails/:restId" exact component={RestaurantDetails} />
       </Switch>
       </Router>
     )

@@ -19,7 +19,7 @@ class Cities extends CoreView{
 
     handleClick(cityId){
 
-        
+        window.location.href = "/restaurants/" + cityId;
 
     }
 
@@ -28,7 +28,7 @@ class Cities extends CoreView{
         if(cities && cities.length > 0){
             return  cities.map((each, idx) => {
                 return(
-                    <Button id={each.id} variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                    <Button id={each.id} variant="outlined" color="primary" style={{marginTop : "20px"}} onClick={() => {this.handleClick(each.id)}} >
                         {each.city}
                     </Button>
                 );

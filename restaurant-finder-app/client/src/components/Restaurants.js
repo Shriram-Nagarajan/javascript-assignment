@@ -6,100 +6,70 @@ import RestaurantCard from './RestaurantCard';
 
 import '../css/Restaurants.css';
 import logo from '../img/logo.jpg';
-const restaurants = [
-  {
-    "name" : "Saravana Bhavan",
-    "locality" : "Alandur",
-    "logo" : logo
-  }, {
-    "name" : "Sangeetha",
-    "locality" : "T. Nagar",
-    "logo" : logo
-  },
-  {
-    "name" : "Saravana Bhavan",
-    "locality" : "Alandur",
-    "logo" : logo
-  }, {
-    "name" : "Sangeetha",
-    "locality" : "T. Nagar",
-    "logo" : logo
-  },
-  {
-    "name" : "Saravana Bhavan",
-    "locality" : "Alandur",
-    "logo" : logo
-  }, {
-    "name" : "Sangeetha",
-    "locality" : "T. Nagar",
-    "logo" : logo
-  },
-  {
-    "name" : "Saravana Bhavan",
-    "locality" : "Alandur",
-    "logo" : logo
-  }, {
-    "name" : "Sangeetha",
-    "locality" : "T. Nagar",
-    "logo" : logo
-  }
-
-]
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
-
-// const theme = ({
-//     root: {
-//       '& > *': {
-//         marginTop: "5px"
-//       },
-//     },
-// });
 
 class Restaurants extends CoreView {
 
   constructor(props){
       super(props);
+      this.restaurants = null;
+      this.state = {
+        restLoaded : false
+      }
   }
 
-  getRestaurants(){
+  getRestaurants(restaurants){
     if(restaurants && restaurants.length > 0){
       return restaurants.map((each, idx) => {
-        return <RestaurantCard {...each} />
+
+        let rest = {};
+
+        rest.name = each.restaurant_name;
+        rest.locality = each.locality;
+        rest.logo = logo;
+        rest.restaurant_id = each.restaurant_id;
+        rest.cuisines = each.cuisines.split(",");
+
+        return <RestaurantCard key={each.restaurant_id} {...rest} />
       });
     }
   }
 
-  fetchRestaurants(){
+  fetchRestaurants(cityId){
     let me = this;
 
-    let success = function(){
+    let success = function(response){
+
+      if(response && response.length > 0){
+        me.restaurants = response;
+        me.setState({
+          restLoaded : true
+        });
+      }
 
     }
 
-    let failure = function(){
+    let failure = function(response){
         
     }
 
     me.ajaxGet(me.urlFor("get_restaurants"),{"cityId" : cityId},success, failure);
   }
 
+  getCityId(){
+    return window.location.pathname.split("/restaurants/")[1];
+  }
+
   render(){
     let {classes} = this.props;
     console.log("classes" , classes);
-    return (
+    if(this.state.restLoaded){
+      return (
         <div className={" d-flex flex-column align-items-start"}>
           {/* <Pagination count={10} variant="outlined" /> */}
           <div className="d-flex flex-column cardContainer align-items-center">
             {/* <RestaurantCard  />
             <RestaurantCard /> */}
-            {this.getRestaurants()}
+            {this.getRestaurants(this.restaurants)}
           </div>
           <div className="pagination-container">
              <Pagination count={10} variant="outlined" color="primary" />
@@ -108,6 +78,10 @@ class Restaurants extends CoreView {
           {/* <Pagination count={10} variant="outlined" disabled /> */}
         </div>
       );
+    } else{
+      this.fetchRestaurants(this.getCityId());
+      return(<></>);
+    }
   }
 }
 

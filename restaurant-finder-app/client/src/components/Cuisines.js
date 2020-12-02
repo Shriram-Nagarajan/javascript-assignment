@@ -1,8 +1,6 @@
 import { Box } from "@material-ui/core";
 import CoreView from "../core/CoreView"
 
-const cuisines = ["Idly", "Dosa", "Sambar"]
-
 export default class Cuisines extends CoreView{
 
     constructor(props){
@@ -30,6 +28,8 @@ export default class Cuisines extends CoreView{
     }
 
     getCuisines(){
+        let me = this;
+        let {cuisines} = me.props; 
         if(cuisines && cuisines.length > 0){
             return cuisines.map(this.getEach);
         }
