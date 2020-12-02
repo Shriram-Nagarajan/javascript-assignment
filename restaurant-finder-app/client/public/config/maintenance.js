@@ -1,0 +1,1 @@
+window.restaurantsPerPage = 2;
