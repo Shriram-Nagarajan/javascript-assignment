@@ -27,14 +27,14 @@ export default class RestaurantDetails extends CoreView{
                     </Card.Text>
                     <Cuisines />
                     <Card.Text className="mt-4">
-                        <h5>Address</h5> 
+                        <h5>{this.rb("address")}</h5> 
                         <div className="d-flex flex-column ml-3">
                             <span>{loc.street}</span>
                             <span>{loc.locality}</span>
                             <span>{loc.city+", " +loc.state+ ", "+loc.country_name}</span>
                         </div>
                     </Card.Text>
-                    <h5>Menus</h5>
+                    <h5>{this.rb("menus")}</h5>
                     <Menu menuItems={menu} />
                     {/* <Menu className="mt-4"></Menu>
                     <Menu />

@@ -1,0 +1,23 @@
+.addDishBtn{
+    width: max-content;
+}
+
+.removeDishBtn{
+    cursor: pointer;
+}
+
+.addRestForm{
+    width: 100%;
+}
+
+@media (min-width:320px) {
+    .addRestContainer{
+        width: 95%;
+    }
+}
+
+@media (min-width:961px) {
+    .addRestContainer{
+        width: 60%;
+    }
+}

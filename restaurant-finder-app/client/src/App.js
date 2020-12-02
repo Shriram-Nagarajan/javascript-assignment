@@ -6,6 +6,7 @@ import Restaurants from './components/Restaurants';
 import RestaurantDetails from './components/RestaurantDetails';
 
 import React from 'react';
+import AddRestaurant from './components/AddRestaurant';
 
 export default class App extends React.Component {
 
@@ -20,6 +21,7 @@ export default class App extends React.Component {
         <Route path ="/cities" exact component={Cities} />
         <Route path="/restaurants/:cityId" exact component={Restaurants} />
         <Route path="/restdetails/:restId" exact component={RestaurantDetails} />
+        <Route path="/createrestaurant" exact component={AddRestaurant} />
       </Switch>
       </Router>
     )
