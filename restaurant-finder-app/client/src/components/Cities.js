@@ -2,60 +2,105 @@ import CoreView from "../core/CoreView";
 import Button from '@material-ui/core/Button';
 import { Avatar, Box } from "@material-ui/core";
 import '../css/Cities.css';
-import {deepPurple} from '@material-ui/core/colors';
-import { withStyles } from '@material-ui/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 
 import logo from '../img/logo.jpg';
-
-const theme = createMuiTheme({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: createMuiTheme({
-            spacing : 1
-        }),
-      },
-    }
-});
 
 class Cities extends CoreView{
 
     constructor(props){
         super(props);
+        this.state = {
+            citiesLoaded : false
+        }
+        this.cities = null;
+
+    }
+
+    handleClick(cityId){
+
+        
+
+    }
+
+    renderCities(cities){
+
+        if(cities && cities.length > 0){
+            return  cities.map((each, idx) => {
+                return(
+                    <Button id={each.id} variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                        {each.city}
+                    </Button>
+                );
+            });
+        }
+        return (<></>);
+
+    }
+
+    fetchCities(){
+
+        let me = this;
+        let success = function(response){
+
+            if(response && response.length > 0){
+                me.cities = response;
+                me.setState({
+                    citiesLoaded : true
+                });
+            }
+
+        }
+
+        let failure = function(response){
+
+            alert("Error occurred, get_cities");
+
+        }
+        // debugger;
+
+        this.ajaxGet(me.urlFor("get_cities"),null,success,failure);
+
     }
 
     render(){
-        return(
-                <Box className="pageCenter citiesBox">
-                    <Avatar alt={"A"} src={logo} className="logo" />
-                    <h1>{this.rb("app_name")}</h1>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Chennai
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Mumbai
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Kolkata
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Hyderabad
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Chennai
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Mumbai
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Kolkata
-                    </Button>
-                    <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
-                        Hyderabad
-                    </Button>
-                </Box>
-        )
+        if(this.state.citiesLoaded){
+            return(
+                    <Box className="pageCenter citiesBox">
+                        <Avatar alt={"A"} src={logo} className="logo" />
+                        <h1>{this.rb("app_name")}</h1>
+                        {/* <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Chennai
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Mumbai
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Kolkata
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Hyderabad
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Chennai
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Mumbai
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Kolkata
+                        </Button>
+                        <Button variant="outlined" color="primary" style={{marginTop : "20px"}}>
+                            Hyderabad
+                        </Button> */}
+                        {this.renderCities(this.cities)}
+                    </Box>
+            )
+
+        }   else{
+            this.fetchCities();
+            return(<></>);
+        }
     }
 
 }

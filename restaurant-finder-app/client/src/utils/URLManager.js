@@ -29,8 +29,9 @@ const URLManager = function(){
     const replaceBaseUrl=function(url){
         if(sortedBaseDomain){
             for(let i in sortedBaseDomain){
-                if(url && ~url.indexOf(i)){
-                    url = url.replace(i, sortedBaseDomain[i]);
+                let base = "{" + i + "}";
+                if(url && ~url.indexOf(base)){
+                    url = url.replace(base, sortedBaseDomain[i]);
                     if(url && !url.match("http[s]?://+")){
                         url = PROTOCOL + url;
                     }
