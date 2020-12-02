@@ -1,5 +1,5 @@
 const connector = require("./database/connector");
-
+require("./controller/controller");
 process.on("exit", () => {
     connector.releaseAll((err) => {
         if(err){
