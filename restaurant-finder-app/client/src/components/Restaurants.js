@@ -77,7 +77,7 @@ class Restaurants extends CoreView {
     let {classes} = this.props;
     console.log("classes" , classes);
     if(this.state.restLoaded && this.restaurants && this.restaurants.length > 0){
-      let totalPages = this.restaurants.length / window.restaurantsPerPage;
+      let totalPages = Math.ceil(this.restaurants.length / window.restaurantsPerPage);
       return (
         <div className={" d-flex flex-column align-items-start"}>
           {/* <Pagination count={10} variant="outlined" /> */}
