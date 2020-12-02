@@ -23,6 +23,8 @@ const configureCors = function(){
 }
 
 configureCors();
+app.use(express.json());   
+app.use(express.urlencoded())
 
 app.route("/getCities")
     .get(restList.getCities);
@@ -32,5 +34,8 @@ app.route("/getRestaurants")
 
 app.route("/getDetails")
     .get(restDetails.getDetails);
+
+app.route("/createRestaurant")
+    .post(restDetails.addDetails);
 
 app.listen(port);
